@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 #환경 변수 불러오기
 detailsHost = os.environ.get("DETAILS_SVC_SERVICE_HOST")
+detailsPort = os.environ.get("DETAILS_SVC_SERVICE_PORT")
 
 @app.route('/')
 @app.route('/home')
@@ -14,11 +15,11 @@ def front():
   return render_template('index.html')
 
 #영화 정보 조회 요청보내기
-@app.route('/movie/<string:movie_code>', methods=['GET'])
+@app.route('/movie/<string:movie_code>')
 def movieInfoRoute(movie_code):
   try:
-    # 데이터를 보낼 때 딕셔너리 형태로 보낸다. 없는 페이지 요청해도 에러를 띄우지 않는다.
-    details = requests.get(f'http://{detailsHost}:80/details/{movie_code}').json()
+    # 데이터를 보낼 때 딕셔너리 형태로 보낸다.
+    details = requests.get(f'http://{detailsHost}:{detailsPort}/details/{movie_code}').json()
   except BaseException:
     details = None
 
