@@ -3,7 +3,6 @@ from flask import Flask, request, Response, abort
 from flask_restx import Resource, Api, fields
 
 app = Flask(__name__)
-
 api = Api(app)
 
 movie_code_dict={
@@ -87,11 +86,11 @@ movie_data = api.model(
     }
 )
 
-@app.route('/movie/<string:movie_code>')
-def get(movie_code):
-    if movie_code not in movie_code_dict.keys():
-       abort(404, description=f"Movie {movie_code} doesn't exist")
-    data = movie_code_dict[movie_code]
+@app.route('/movie/<string:movie_code>', methods=['GET'])
+def movieInfo(movie_code):
+    data = None
+    if movie_code in movie_code_dict.keys():
+        data = movie_code_dict[movie_code]
     return json.dumps(data)
 
 @ns_movies.route('/swagger/<string:movie_code>')
