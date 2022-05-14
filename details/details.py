@@ -4,9 +4,11 @@ from flask_restx import Resource, Api, fields
 
 app = Flask(__name__)
 api = Api(app)
+
 '''
     Change JSON style data to DB connection
 '''
+
 movie_code_dict={
     '20133165':{
         "movie_name": '이블데드',
